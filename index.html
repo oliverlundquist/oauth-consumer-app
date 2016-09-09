@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Oauth Consumer App</title>
+	<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgo=">
+	<base href="/">
+</head>
+<body>
+	<div id="container"></div>
+	<script src="http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/assets/jquery-3.1.0.min.js"></script>
+	<script src="http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/assets/jquery-query-vars.js"></script>
+	<script>
+		var href, text;
+
+		// href  = 'http://mystore-api-auth.eu-west-1.elasticbeanstalk.com/oauth/authorize';
+		href  = 'http://passport.dev:8001/oauth/authorize';
+		href += '?client_id=1';
+		// href += '&redirect_uri=http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/callback.html';
+		href += '&redirect_uri=http://consumer.dev:8000/callback.html';
+		href += '&response_type=code';
+		href += '&scope=read:products read:categories';
+
+		text  = 'login with mystore.no';
+
+		$('<a>', { href: href, text: text }).appendTo('#container');
+	</script>
+</body>
+</html>

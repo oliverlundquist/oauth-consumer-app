@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Oauth Consumer App</title>
+	<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgo=">
+	<base href="/">
+</head>
+<body>
+	<div id="container"></div>
+	<script src="http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/assets/jquery-3.1.0.min.js"></script>
+	<script src="http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/assets/jquery-query-vars.js"></script>
+	<script>
+		(function (storage, redirect) {
+			var url, data, token;
+
+			if ((token = storage.getItem('token')) === null) {
+				getToken();
+			} else {
+				getProducts();
+			}
+
+			function getToken() {
+				// url = 'http://mystore-api-auth.eu-west-1.elasticbeanstalk.com/oauth/token';
+				url = 'http://passport.dev:8001/oauth/token';
+
+				data = {};
+				data.grant_type    = 'authorization_code';
+				data.client_id     = 1;
+				data.client_secret = '2v0avRBDHcGdmqAhm3xNBC97STyw80f9LTMy82Du';
+				// data.redirect_uri  = 'http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/callback.html';
+				data.redirect_uri  = 'http://consumer.dev:8000/callback.html';
+				data.code          = decodeURIComponent($.getUrlVar('code')) || '';
+
+				$.post(url, data)
+					.then(function(response) {
+						token = response.access_token;
+						storage.setItem('token', response.access_token);
+						getProducts();
+					})
+					.catch(function() {
+						// redirect.href = 'http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/index.html';
+						redirect.href = 'http://consumer.dev:8000/index.html';
+					});
+			}
+
+			function getProducts() {
+				$.ajax({
+						// url: 'http://mystore-api.eu-west-1.elasticbeanstalk.com/shops/xtralars/products',
+						url: 'http://localhost/shops/xtralars/products',
+						headers: {
+							'Authorization': 'Bearer ' + token,
+							'Access-Control-Allow-Headers': 'Authorization'
+							// 'Access-Control-Allow-Headers': 'x-requested-with'
+						}
+					})
+					.then(function(response) {
+						render(response.data);
+					})
+					.catch(function() {
+						storage.removeItem('token');
+						// redirect.href = 'http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/index.html';
+						redirect.href = 'http://consumer.dev:8000/index.html';
+					});
+			}
+
+			function render(data) {
+				data.forEach(function (datum) {
+					$('<div>')
+						.html(
+							'<img src="' + datum.attributes.products_image + '" />' +
+							datum.attributes.name.no + '<br>' +
+							datum.attributes.name.no + '<br>' +
+							datum.attributes.price
+						)
+						.appendTo('#container');
+				});
+			}
+
+		})(window.localStorage, window.location);
+	</script>
+</body>
+</html>
