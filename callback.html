@@ -5,6 +5,12 @@
 	<title>Oauth Consumer App</title>
 	<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgo=">
 	<base href="/">
+	<style>
+		.product-card img {
+			width: 200px;
+			height: auto;
+		}
+	</style>
 </head>
 <body>
 	<div id="container"></div>
@@ -66,11 +72,11 @@
 
 			function render(data) {
 				data.forEach(function (datum) {
-					$('<div>')
+					$('<div>', { class: 'product-card' })
 						.html(
-							'<img src="' + datum.attributes.products_image + '" />' +
+							'<img src="' + datum.attributes.image + '" />' +
 							datum.attributes.name.no + '<br>' +
-							datum.attributes.name.no + '<br>' +
+							datum.attributes.name.se + '<br>' +
 							datum.attributes.price
 						)
 						.appendTo('#container');
