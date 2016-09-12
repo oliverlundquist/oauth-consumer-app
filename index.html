@@ -4,26 +4,41 @@
 	<meta charset="utf-8">
 	<title>Oauth Consumer App</title>
 	<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgo=">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<base href="/">
+	<style>
+		body {
+			padding: 0 20px;
+		}
+		.login-btn {
+			width: 360px;
+			height: auto;
+		}
+	</style>
 </head>
 <body>
-	<div id="container"></div>
+	<div id="container">
+		<h1>List Your Products App</h1>
+		<p>This is a third-party app that lists your products from your favorite e-commerce platform provider.</p>
+		<h2>Active Integrations:</h2>
+		<ul>
+			<li id="mystore-login"></li>
+		</ul>
+	</div>
 	<script src="http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/assets/jquery-3.1.0.min.js"></script>
 	<script src="http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/assets/jquery-query-vars.js"></script>
 	<script>
-		var href, text;
+		var href, html;
 
-		// href  = 'http://mystore-api-auth.eu-west-1.elasticbeanstalk.com/oauth/authorize';
-		href  = 'http://passport.dev:8001/oauth/authorize';
+		href  = 'http://mystore-api-auth.eu-west-1.elasticbeanstalk.com/oauth/authorize';
 		href += '?client_id=1';
-		// href += '&redirect_uri=http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/callback.html';
-		href += '&redirect_uri=http://consumer.dev:8000/callback.html';
+		href += '&redirect_uri=http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/callback.html';
 		href += '&response_type=code';
 		href += '&scope=read:products read:categories';
 
-		text  = 'login with mystore.no';
+		html  = '<img class="login-btn" src="http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/assets/mystore-api-login-btn.jpg" alt="Login with Mystore.no" />';
 
-		$('<a>', { href: href, text: text }).appendTo('#container');
+		$('<a>', { href: href }).html(html).appendTo('#mystore-login');
 	</script>
 </body>
 </html>

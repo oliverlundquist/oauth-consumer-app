@@ -27,15 +27,13 @@
 			}
 
 			function getToken() {
-				// url = 'http://mystore-api-auth.eu-west-1.elasticbeanstalk.com/oauth/token';
-				url = 'http://passport.dev:8001/oauth/token';
+				url = 'http://mystore-api-auth.eu-west-1.elasticbeanstalk.com/oauth/token';
 
 				data = {};
 				data.grant_type    = 'authorization_code';
 				data.client_id     = 1;
 				data.client_secret = '2v0avRBDHcGdmqAhm3xNBC97STyw80f9LTMy82Du';
-				// data.redirect_uri  = 'http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/callback.html';
-				data.redirect_uri  = 'http://consumer.dev:8000/callback.html';
+				data.redirect_uri  = 'http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/callback.html';
 				data.code          = decodeURIComponent($.getUrlVar('code')) || '';
 
 				$.post(url, data)
@@ -45,19 +43,16 @@
 						getProducts();
 					})
 					.catch(function() {
-						// redirect.href = 'http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/index.html';
-						redirect.href = 'http://consumer.dev:8000/index.html';
+						redirect.href = 'http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/index.html';
 					});
 			}
 
 			function getProducts() {
 				$.ajax({
-						// url: 'http://mystore-api.eu-west-1.elasticbeanstalk.com/shops/xtralars/products',
-						url: 'http://localhost/shops/xtralars/products',
+						url: 'http://mystore-api.eu-west-1.elasticbeanstalk.com/shops/xtralars/products',
 						headers: {
 							'Authorization': 'Bearer ' + token,
 							'Access-Control-Allow-Headers': 'Authorization'
-							// 'Access-Control-Allow-Headers': 'x-requested-with'
 						}
 					})
 					.then(function(response) {
@@ -65,8 +60,7 @@
 					})
 					.catch(function() {
 						storage.removeItem('token');
-						// redirect.href = 'http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/index.html';
-						redirect.href = 'http://consumer.dev:8000/index.html';
+						redirect.href = 'http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/index.html';
 					});
 			}
 
