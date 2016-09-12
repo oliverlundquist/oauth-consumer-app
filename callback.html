@@ -6,9 +6,17 @@
 	<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgo=">
 	<base href="/">
 	<style>
+		.product-card {
+			display:inline-block;
+			padding:10px;
+			border:1px solid #000;
+			margin-right:10px;
+			vertical-align: top;
+		}
 		.product-card img {
 			width: 200px;
 			height: auto;
+			display:block;
 		}
 	</style>
 </head>
@@ -71,7 +79,7 @@
 							'<img src="' + datum.attributes.image + '" />' +
 							datum.attributes.name.no + '<br>' +
 							datum.attributes.name.se + '<br>' +
-							datum.attributes.price
+							datum.attributes.price + ' NOK'
 						)
 						.appendTo('#container');
 				});
