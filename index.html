@@ -25,8 +25,8 @@
 			<li id="mystore-login"></li>
 		</ul>
 	</div>
-	<script src="http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/assets/jquery-3.1.0.min.js"></script>
-	<script src="http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/assets/jquery-query-vars.js"></script>
+	<script src="https://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/assets/jquery-3.1.0.min.js"></script>
+	<script src="https://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/assets/jquery-query-vars.js"></script>
 	<script>
 		var href, html;
 
@@ -36,7 +36,7 @@
 		href += '&response_type=code';
 		href += '&scope=read:products read:categories';
 
-		html  = '<img class="login-btn" src="http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/assets/mystore-api-login-btn.jpg" alt="Login with Mystore.no" />';
+		html  = '<img class="login-btn" src="https://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/assets/mystore-api-login-btn.jpg" alt="Login with Mystore.no" />';
 
 		$('<a>', { href: href }).html(html).appendTo('#mystore-login');
 	</script>
