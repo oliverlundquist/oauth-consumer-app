@@ -1,1 +1,1 @@
-### oauth-consumer-app
+### oauth2-consumer-app

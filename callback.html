@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Oauth Consumer App</title>
+	<title>OAuth2 Consumer App</title>
 	<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgo=">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<base href="/">
@@ -23,8 +23,8 @@
 </head>
 <body>
 	<div id="container"></div>
-	<script src="http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/assets/jquery-3.1.0.min.js"></script>
-	<script src="http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/assets/jquery-query-vars.js"></script>
+	<script src="https://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/assets/jquery-3.1.0.min.js"></script>
+	<script src="https://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/assets/jquery-query-vars.js"></script>
 	<script>
 		(function (storage, redirect) {
 			var url, data, token;
@@ -36,13 +36,13 @@
 			}
 
 			function getToken() {
-				url = 'http://mystore-api-auth.eu-west-1.elasticbeanstalk.com/oauth/token';
+				url = 'https://auth.mystore.no/oauth/authorize';
 
 				data = {};
 				data.grant_type    = 'authorization_code';
-				data.client_id     = 1;
-				data.client_secret = '2v0avRBDHcGdmqAhm3xNBC97STyw80f9LTMy82Du';
-				data.redirect_uri  = 'http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/callback.html';
+				data.client_id     = 0;  // 1. set app client id
+				data.client_secret = ''; // 2. set your app secret
+				data.redirect_uri  = ''; // 3. set the redirect_uri for your app
 				data.code          = decodeURIComponent($.getUrlVar('code')) || '';
 
 				$.post(url, data)
@@ -52,13 +52,13 @@
 						getProducts();
 					})
 					.catch(function() {
-						redirect.href = 'http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/index.html';
+						redirect.href = ''; // 4. set redirect on error
 					});
 			}
 
 			function getProducts() {
 				$.ajax({
-						url: 'http://mystore-api.eu-west-1.elasticbeanstalk.com/shops/xtralars/products',
+						url: '', // 5. set resource url to the resource you want to fetch
 						headers: {
 							'Authorization': 'Bearer ' + token,
 							'Access-Control-Allow-Headers': 'Authorization'
@@ -69,7 +69,7 @@
 					})
 					.catch(function() {
 						storage.removeItem('token');
-						redirect.href = 'http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/index.html';
+						redirect.href = ''; // 6. set redirect on error
 					});
 			}
 
