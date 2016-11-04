@@ -22,7 +22,10 @@
 	</style>
 </head>
 <body>
-	<div id="container"></div>
+	<div id="container">
+		<h1>List Your Products App</h1>
+		<div id="products-container"></div>
+	</div>
 	<script src="https://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/assets/jquery-3.1.0.min.js"></script>
 	<script src="https://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/assets/jquery-query-vars.js"></script>
 	<script>
@@ -48,11 +51,14 @@
 				$.post(url, data)
 					.then(function(response) {
 						token = response.access_token;
-						storage.setItem('token', response.access_token);
+						console.log(token);
+						storage.setItem('token', token);
 						getProducts();
 					})
-					.catch(function() {
-						redirect.href = ''; // 4. set redirect on error
+					.catch(function(error) {
+						console.log(error);
+						$('#products-container').html('error fetching products');
+						// redirect.href = ''; // 4. set redirect on error
 					});
 			}
 
@@ -61,15 +67,19 @@
 						url: '', // 5. set resource url to the resource you want to fetch
 						headers: {
 							'Authorization': 'Bearer ' + token,
+							'Accept': 'application/vnd.api+json',
+							'Content-Type': 'application/vnd.api+json',
 							'Access-Control-Allow-Headers': 'Authorization'
 						}
 					})
 					.then(function(response) {
 						render(response.data);
 					})
-					.catch(function() {
+					.catch(function(error) {
 						storage.removeItem('token');
-						redirect.href = ''; // 6. set redirect on error
+						console.log(error);
+						$('#products-container').html('error fetching products');
+						// redirect.href = ''; // 6. set redirect on error
 					});
 			}
 
@@ -78,11 +88,10 @@
 					$('<div>', { class: 'product-card' })
 						.html(
 							'<img src="' + datum.attributes.image + '" />' +
-							datum.attributes.name.no + '<br>' +
-							datum.attributes.name.se + '<br>' +
-							datum.attributes.price + ' NOK'
+							'Name: ' + JSON.stringify(datum.attributes.name) + '<br>' +
+							'Price: ' + datum.attributes.price + ' NOK'
 						)
-						.appendTo('#container');
+						.appendTo('#products-container');
 				});
 			}
 
