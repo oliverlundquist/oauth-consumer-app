@@ -39,13 +39,13 @@
 			}
 
 			function getToken() {
-				url = 'https://auth.mystore.no/oauth/token';
+				url  = 'https://auth.mystore.no/oauth/token';
 
 				data = {};
 				data.grant_type    = 'authorization_code';
-				data.client_id     = 0;  // 1. set app client id
-				data.client_secret = ''; // 2. set your app secret
-				data.redirect_uri  = ''; // 3. set the redirect_uri for your app
+				data.client_id     = 6;  // 1. set app client id
+				data.client_secret = 'x83UMS7nemArt9DYWHSPWyb1TPA6tpTKR2L5yNH4'; // 2. set your app secret
+				data.redirect_uri  = 'http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/callback.html'; // 3. set the redirect_uri for your app
 				data.code          = decodeURIComponent($.getUrlVar('code')) || '';
 
 				$.post(url, data)
@@ -64,7 +64,7 @@
 
 			function getProducts() {
 				$.ajax({
-						url: '', // 5. set resource url to the resource you want to fetch
+						url: 'https://api.mystore.no/shops/' + getShopNameFromToken(token) + '/products', // 5. set resource url to the resource you want to fetch
 						headers: {
 							'Authorization': 'Bearer ' + token,
 							'Accept': 'application/vnd.api+json',
@@ -93,6 +93,10 @@
 						)
 						.appendTo('#products-container');
 				});
+			}
+
+			function getShopNameFromToken(token) {
+				return JSON.parse(atob(token.split('.')[1]))['no_mystore_hosts'][0];
 			}
 
 		})(window.localStorage, window.location);

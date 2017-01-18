@@ -31,10 +31,10 @@
 		var href, html;
 
 		href  = 'https://auth.mystore.no/oauth/authorize';
-		href += '?client_id=0'; // 1. set your client_id
-		href += '&redirect_uri='; // 2. set redirect_uri for your app
+		href += '?client_id=6'; // 1. set your client_id
+		href += '&redirect_uri=http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/callback.html'; // 2. set redirect_uri for your app
 		href += '&response_type=code';
-		href += '&scope=read:products read:categories'; // 4. set which scopes the token should be able to access
+		href += '&scope=read:products read:categories'; // 3. set which scopes the token should be able to access
 
 		html  = '<img class="login-btn" src="https://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/assets/mystore-api-login-btn.jpg" alt="Login with Mystore.no" />';
 
