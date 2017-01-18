@@ -45,7 +45,7 @@
 				data.grant_type    = 'authorization_code';
 				data.client_id     = 6;  // 1. set app client id
 				data.client_secret = 'x83UMS7nemArt9DYWHSPWyb1TPA6tpTKR2L5yNH4'; // 2. set your app secret
-				data.redirect_uri  = 'http://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/callback.html'; // 3. set the redirect_uri for your app
+				data.redirect_uri  = 'https://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/callback.html'; // 3. set the redirect_uri for your app
 				data.code          = decodeURIComponent($.getUrlVar('code')) || '';
 
 				$.post(url, data)
