@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>OAuth2 Consumer App</title>
+	<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgo=">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<base href="/">
+	<style>
+		.product-card {
+			display:inline-block;
+			padding:10px;
+			border:1px solid #000;
+			margin-right:10px;
+			vertical-align: top;
+		}
+		.product-card img {
+			width: 200px;
+			height: auto;
+			display:block;
+		}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<h1>List Your Products App</h1>
+		<div id="products-container"></div>
+	</div>
+	<script src="https://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/assets/jquery-3.1.0.min.js"></script>
+	<script src="https://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/assets/jquery-query-vars.js"></script>
+	<script>
+		(function (storage, redirect) {
+
+			var parsedToken = {};
+
+			window.location.hash.substring(1).split('&').forEach(function (fragment) {
+				var key   = fragment.split('=')[0];
+				var value = decodeURIComponent(fragment.split('=')[1]);
+				parsedToken[key] = value;
+			});
+
+			document.getElementById('products-container').innerHTML = JSON.stringify(parsedToken);
+
+		})(window.localStorage, window.location);
+	</script>
+</body>
+</html>
