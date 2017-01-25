@@ -30,10 +30,9 @@
 	<script>
 		var href, html;
 
-		// href  = 'https://auth.mystore.no/oauth/authorize'; // 1. set your client_id
-		href  = 'http://passport.dev/oauth/authorize';
-		href += '?client_id=6';
-		href += '&redirect_uri=http://consumer.dev:8010/implicit-grant/callback.html'; // 2. set redirect_uri for
+		href  = 'https://auth.mystore.no/oauth/authorize';
+		href += '?client_id=11'; // 1. set your client_id
+		href += '&redirect_uri=https://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/implicit-grant/callback.html'; // 2. set redirect_uri for
 		href += '&response_type=token';
 		href += '&scope=read:products read:categories'; // 3. set which scopes the token should be able to access
 
