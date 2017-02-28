@@ -39,21 +39,22 @@
 			// }
 
 			function getToken() {
-				url  = 'https://auth.mystore.no/oauth/token';
+				url  = 'http://localhost/oauth/token';
 
 				data = {};
 				data.grant_type    = 'authorization_code';
 				data.client_id     = 6;  // 1. set app client id
-				data.client_secret = 'x83UMS7nemArt9DYWHSPWyb1TPA6tpTKR2L5yNH4'; // 2. set your app secret
-				data.redirect_uri  = 'https://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/callback.html'; // 3. set the redirect_uri for your app
+				data.client_secret = 'yhEuQorTEfbYCrVpOiDk64OMcvYQN0GNBHOd3yR6'; // 2. set your app secret
+				data.redirect_uri  = 'http://consumer.dev:8010/local/callback.html'; // 3. set the redirect_uri for your app
 				data.code          = decodeURIComponent($.getUrlVar('code')) || '';
 
 				$.post(url, data)
 					.then(function(response) {
 						token = response.access_token;
-						console.log(token);
+						console.log(response);
 						storage.setItem('token', token);
 						getProducts();
+
 					})
 					.catch(function(error) {
 						console.log(error);
