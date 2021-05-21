@@ -1,0 +1,267 @@
+POST /shops/shopname/atomic-batch
+Content-Type: application/json
+Authorization: Bearer <INSERT-YOUR-TOKEN-HERE>
+Accept: application/json
+
+[
+    {
+        "method": "POST",
+        "path": "/shops/shopname/orders",
+        "return": ["data.id"],
+        "body": {
+            "data": {
+                "type": "orders",
+                "attributes": {
+                    "customer_address_name": "Customer Name",
+                    "customer_address_city": "Customer City",
+                    "customer_address_country": "Norway",
+                    "shipping_address_name": "Shipping Name",
+                    "shipping_address_city": "Shipping City",
+                    "shipping_address_country": "Sweden",
+                    "billing_address_name": "Billing Name",
+                    "billing_address_city": "Billing City",
+                    "billing_address_country": "Denmark",
+                    "currency": "NOK",
+                    "payment_method": "Postoppkrav",
+                    "payment_module": "cod",
+                    "shipping_method": "servicepakke_servicepakke"
+                },
+                "relationships": {
+                    "customer": {
+                        "data": { "type": "customers", "id": "1" }
+                    },
+                    "order-status": {
+                        "data": { "type": "order-status", "id": "1" }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "method": "POST",
+        "path": "/shops/shopname/order-products",
+        "return": ["data.id"],
+        "body": {
+            "data": {
+                "type": "order-products",
+                "attributes": {
+                    "name": "Some Order Product",
+                    "sku": "222-343434-X",
+                    "original_price": 311,
+                    "price": 200,
+                    "final_price": 422,
+                    "quantity": 1,
+                    "tax_rate": 16.5
+                },
+                "relationships": {
+                    "order": {
+                        "data": { "type": "orders", "id": "2" }
+                    },
+                    "product": {
+                        "data": { "type": "products", "id": "1" }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "method": "POST",
+        "path": "/shops/shopname/order-product-attributes",
+        "body": {
+            "data": {
+                "type": "order-product-attributes",
+                "attributes": {
+                    "option_name": "Color",
+                    "option_value_name": "Blue",
+                    "option_values_price": 111,
+                    "option_values_price_prefix": "+",
+                    "track_stock": 1
+                },
+                "relationships": {
+                    "order": {
+                        "data": { "type": "orders", "id": "{{operation.1.return.1}}" }
+                    },
+                    "order-product": {
+                        "data": { "type": "order-products", "id": "{{operation.2.return.1}}" }
+                    },
+                    "product-option": {
+                        "data": { "type": "product-options", "id": "4" }
+                    },
+                    "product-option-value": {
+                        "data": { "type": "product-option-values", "id": "58" }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "method": "POST",
+        "path": "/shops/shopname/order-product-attributes",
+        "body": {
+            "data": {
+                "type": "order-product-attributes",
+                "attributes": {
+                    "option_name": "Size",
+                    "option_value_name": "L",
+                    "option_values_price": 111,
+                    "option_values_price_prefix": "+",
+                    "track_stock": 1
+                },
+                "relationships": {
+                    "order": {
+                        "data": { "type": "orders", "id": "{{operation.1.return.1}}" }
+                    },
+                    "order-product": {
+                        "data": { "type": "order-products", "id": "{{operation.2.return.1}}" }
+                    },
+                    "product-option": {
+                        "data": { "type": "product-options", "id": "5" }
+                    },
+                    "product-option-value": {
+                        "data": { "type": "product-option-values", "id": "4" }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "method": "POST",
+        "path": "/shops/shopname/order-status-history",
+        "body": {
+            "data": {
+                "type": "order-status-history",
+                "attributes": {
+                    "comments": "Order Created via Mystore API"
+                },
+                "relationships": {
+                    "order": {
+                        "data": { "type": "orders", "id": "{{operation.1.return.1}}" }
+                    },
+                    "order-status": {
+                        "data": { "type": "order-status", "id": "1" }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "method": "POST",
+        "path": "/shops/shopname/order-totals",
+        "body": {
+            "data": {
+                "type": "order-totals",
+                "attributes": {
+                    "title": "Sub-Total:",
+                    "text": "491,63",
+                    "value": 491.63,
+                    "value_without_tax": 422,
+                    "sort": 10,
+                    "tax_rate": "",
+                    "class": "ot_subtotal",
+                    "order_total_type": "total"
+                },
+                "relationships": {
+                    "order": {
+                        "data": { "type": "orders", "id": "{{operation.1.return.1}}" }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "method": "POST",
+        "path": "/shops/shopname/order-totals",
+        "body": {
+            "data": {
+                "type": "order-totals",
+                "attributes": {
+                    "title": "Fast fraktpris:",
+                    "text": "150,00",
+                    "value": 150,
+                    "value_without_tax": 120,
+                    "sort": 20,
+                    "tax_rate": "25",
+                    "class": "ot_shipping",
+                    "order_total_type": "line"
+                },
+                "relationships": {
+                    "order": {
+                        "data": { "type": "orders", "id": "{{operation.1.return.1}}" }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "method": "POST",
+        "path": "/shops/shopname/order-totals",
+        "body": {
+            "data": {
+                "type": "order-totals",
+                "attributes": {
+                    "title": "Herav 16.5% mva:",
+                    "text": "69,63",
+                    "value": 69.63,
+                    "value_without_tax": 69.63,
+                    "sort": 40,
+                    "tax_rate": "",
+                    "class": "ot_tax",
+                    "order_total_type": "total"
+                },
+                "relationships": {
+                    "order": {
+                        "data": { "type": "orders", "id": "{{operation.1.return.1}}" }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "method": "POST",
+        "path": "/shops/shopname/order-totals",
+        "body": {
+            "data": {
+                "type": "order-totals",
+                "attributes": {
+                    "title": "Herav 25% mva:",
+                    "text": "30,00",
+                    "value": 30,
+                    "value_without_tax": 30,
+                    "sort": 40,
+                    "tax_rate": "",
+                    "class": "ot_tax",
+                    "order_total_type": "total"
+                },
+                "relationships": {
+                    "order": {
+                        "data": { "type": "orders", "id": "{{operation.1.return.1}}" }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "method": "POST",
+        "path": "/shops/shopname/order-totals",
+        "body": {
+            "data": {
+                "type": "order-totals",
+                "attributes": {
+                    "title": "Totalsum:",
+                    "text": "<b>641,63</b>",
+                    "value": 641.63,
+                    "value_without_tax": 542,
+                    "sort": 50,
+                    "tax_rate": "",
+                    "class": "ot_total",
+                    "order_total_type": "total"
+                },
+                "relationships": {
+                    "order": {
+                        "data": { "type": "orders", "id": "{{operation.1.return.1}}" }
+                    }
+                }
+            }
+        }
+    }
+]

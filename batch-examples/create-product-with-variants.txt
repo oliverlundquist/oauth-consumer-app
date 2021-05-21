@@ -1,0 +1,154 @@
+POST /shops/shopname/atomic-batch
+Content-Type: application/json
+Authorization: Bearer <INSERT-YOUR-TOKEN-HERE>
+Accept: application/json
+
+[
+    {
+        "method": "POST",
+        "path": "/shops/shopname/products",
+        "return": ["data.id"],
+        "body": {
+            "data": {
+                "type": "products",
+                "attributes": {
+                    "name": {
+                        "no": "Mystore API Created Product"
+                    },
+                    "price": 300,
+                    "cost": 100.29,
+                    "quantity": 10,
+                    "sku": "222-343434-X",
+                    "status": 1
+                },
+                "relationships": {
+                    "categories": {
+                        "data": [
+                            {
+                                "type": "categories",
+                                "id": "1"
+                            }
+                        ]
+                    },
+                    "tax-class": {
+                        "data": {
+                            "type": "tax-classes",
+                            "id": "1"
+                        }
+                    },
+                    "manufacturer": {
+                        "data": {
+                            "type": "manufacturers",
+                            "id": "1"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "method": "POST",
+        "path": "/shops/shopname/product-options",
+        "return": ["data.id"],
+        "body": {
+            "data": {
+                "type": "product-options",
+                "attributes": {
+                    "name": {
+                        "no": "Color"
+                    },
+                    "track_stock": "1"
+                }
+            }
+        }
+    },
+    {
+        "method": "POST",
+        "path": "/shops/shopname/product-option-values",
+        "return": ["data.id"],
+        "body": {
+            "data": {
+                "type": "product-option-values",
+                "attributes": {
+                    "name": {
+                        "no": "Red"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "method": "PATCH",
+        "path": "/shops/shopname/product-options/{{operation.2.return.1}}/relationships/product-option-values",
+        "body": {
+            "data": [
+                {
+                    "id": 1,
+                    "type": "product-option-values"
+                }
+            ]
+        }
+    },
+    {
+        "method": "POST",
+        "path": "/shops/shopname/product-attributes",
+        "return": ["data.id"],
+        "body": {
+            "data": {
+                "type": "product-attributes",
+                "attributes": {
+                    "option_values_price": 200.00,
+                    "option_values_price_prefix": "+"
+                },
+                "relationships": {
+                    "product": {
+                        "data": {
+                            "type": "products",
+                            "id": "{{operation.1.return.1}}"
+                        }
+                    },
+                    "product-option": {
+                        "data": {
+                            "type": "product-options",
+                            "id": "{{operation.2.return.1}}"
+                        }
+                    },
+                    "product-option-value": {
+                        "data": {
+                            "type": "product-option-values",
+                            "id": "{{operation.3.return.1}}"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "method": "POST",
+        "path": "/shops/shopname/product-variants",
+        "body": {
+            "data": {
+                "type": "product-variants",
+                "attributes": {
+                    "quantity": 0
+                },
+                "relationships": {
+                    "product": {
+                        "data": {
+                            "type": "products",
+                            "id": "{{operation.1.return.1}}"
+                        }
+                    },
+                    "product-attributes": {
+                        "data": [
+                            {
+                                "type": "product-attributes",
+                                "id": "{{operation.5.return.1}}"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+]
