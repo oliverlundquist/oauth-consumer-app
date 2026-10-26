@@ -22,13 +22,38 @@
 		<p>This is a third-party app that lists your products from your favorite e-commerce platform provider.</p>
 		<h2>Active Integrations:</h2>
 		<ul>
-			<li id="mystore-login"></li>
+			<li>
+				<h3>Grouped scopes (products, orders, customers, store and reports, :read and :read-write)</h3>
+				<div id="mystore-login-grouped"></div>
+			</li>
+			<li>
+				<h3>Legacy token (read:products and read:categories)</h3>
+				<div id="mystore-login"></div>
+			</li>
 		</ul>
 	</div>
 	<script src="https://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/assets/jquery-3.1.0.min.js"></script>
 	<script src="https://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/assets/jquery-query-vars.js"></script>
 	<script>
-		var href, html;
+		var href, html, groupedHref, groupedScopes;
+
+		groupedScopes = [
+			'products:read', 'products:read-write',
+			'orders:read', 'orders:read-write',
+			'customers:read', 'customers:read-write',
+			'store:read', 'store:read-write',
+			'reports:read', 'reports:read-write'
+		];
+
+		groupedHref  = 'https://auth.mystore.no/oauth/authorize';
+		groupedHref += '?client_id=6'; // 1. set your client_id
+		groupedHref += '&redirect_uri=https://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/callback.html'; // 2. set redirect_uri for your app
+		groupedHref += '&response_type=code';
+		groupedHref += '&scope=' + groupedScopes.join(' '); // 3. set which scopes the token should be able to access
+
+		html  = '<img class="login-btn" src="https://s3-eu-west-1.amazonaws.com/mystore-api-auth-app/assets/mystore-api-login-btn.jpg" alt="Login with Mystore.no" />';
+
+		$('<a>', { href: groupedHref }).html(html).appendTo('#mystore-login-grouped');
 
 		href  = 'https://auth.mystore.no/oauth/authorize';
 		href += '?client_id=6'; // 1. set your client_id

@@ -1,1 +1,1 @@
-php -S consumer.dev:8010
+php -S 0.0.0.0:8010

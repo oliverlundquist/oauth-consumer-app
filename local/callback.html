@@ -39,13 +39,13 @@
 			// }
 
 			function getToken() {
-				url  = 'http://localhost/oauth/token';
+				url  = 'http://localhost:8888/oauth/token';
 
 				data = {};
 				data.grant_type    = 'authorization_code';
 				data.client_id     = 6;  // 1. set app client id
-				data.client_secret = 'yhEuQorTEfbYCrVpOiDk64OMcvYQN0GNBHOd3yR6'; // 2. set your app secret
-				data.redirect_uri  = 'http://consumer.dev:8010/local/callback.html'; // 3. set the redirect_uri for your app
+				data.client_secret = 'TiqFX5bB3lv92fh2i8clflyqLKqFK6cH5GBXHHYt'; // 2. set your app secret
+				data.redirect_uri  = 'http://0.0.0.0:8010/local/callback.html'; // 3. set the redirect_uri for your app
 				data.code          = decodeURIComponent($.getUrlVar('code')) || '';
 
 				$.post(url, data)
